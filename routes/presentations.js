@@ -4,7 +4,7 @@ var request = require('request');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   //Check database if content exists, if so create data from that, if not create data from request
-  var url = 'mongodb://heroku_app37481396:3ie4j13vj4tud2q6uo96kgjmlj@ds043012.mongolab.com:43012/heroku_app37481396';
+  var url = req.dburl;
   var MongoClient = req.db;
   MongoClient.connect(url, function(err, db){
     var collection = db.collection('presentations');

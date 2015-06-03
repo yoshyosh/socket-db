@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
+//var url = 'mongodb://localhost:27017/socket-db';
 var url = 'mongodb://heroku_app37481396:3ie4j13vj4tud2q6uo96kgjmlj@ds043012.mongolab.com:43012/heroku_app37481396';
 var port = process.env.PORT || 5000
 var server = require('http').createServer(app);
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next){
   req.db = MongoClient;
+  req.dburl = url;
   next();
 });
 

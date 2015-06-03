@@ -4,7 +4,7 @@ var request = require('request');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var url = 'mongodb://localhost:27017/socket-db';
+  var url = req.dburl;
   var MongoClient = req.db;
   MongoClient.connect(url, function(err, db){
     var collection = db.collection('presentations');
