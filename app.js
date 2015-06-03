@@ -89,6 +89,7 @@ io.on('connection', function(socket) {
     io.emit('user count', userCount);
     console.log("users connected: " + userCount);
     socket.on('disconnect', function(data){
+      userCount = socket.client.conn.server.clientsCount;
       io.emit('user count', userCount);
       console.log("users connected: " + userCount);
     });
