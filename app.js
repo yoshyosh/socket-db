@@ -19,7 +19,6 @@ var presentations = require('./routes/presentations');
 var io = require('socket.io').listen(server);
 
 
-
 MongoClient.connect(url, function(err, db){
   assert.equal(null, err);
   console.log("Successfully connected to the db");
@@ -83,8 +82,15 @@ server.listen(port);
 
 io.on('connection', function(socket) {
     console.log('A new user connected!');
+    var userCount = socket.client.conn.server.clientsCount;
     socket.on('live update', function(msg){
       io.emit('live update', msg);
+    });
+    io.emit('user count', userCount);
+    console.log("users connected: " + userCount);
+    socket.on('disconnect', function(data){
+      io.emit('user count', userCount);
+      console.log("users connected: " + userCount);
     });
 });
 

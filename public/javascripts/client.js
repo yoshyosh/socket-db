@@ -6,6 +6,10 @@ socket.on('info', function (data) {
     console.log(data.msg);
 });
 
+socket.on('user count', function(data){
+  $(".user-count").text(data);
+});
+
 socket.on('live update', function(data){
   var nextUp = data;
   changeLiveSpeaker(nextUp.theatre, nextUp.title)
