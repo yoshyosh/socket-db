@@ -19,10 +19,14 @@
     <ul class="all-talks">
     <% data.forEach(function(el, index){ %>
       <li>
+        <% locationName = "" %>
+        <% if (el.location) { %>
+          <% locationName = el.location.id %>
+        <% } %>
         <% if (el.speakers.length > 0) { %>
           <% speakerName = el.speakers[0].name %>
         <% } %>
-        <%= el.begin %> <a href="#" class="speaker-title" data-theatre="<%= el.location.id %>" data-speaker="<%= speakerName %>"><%= el.title %></a>
+        <%= el.begin %> <a href="#" class="speaker-title" data-theatre="<%= locationName %>" data-speaker="<%= speakerName %>"><%= el.title %></a>
         <%= speakerName %>
       </li>
     <% }) %>

@@ -1,4 +1,5 @@
 var express = require('express');
+var app = express();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -7,22 +8,16 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var url = 'mongodb://localhost:27017/socket-db';
-
+var port = process.env.PORT || 5000
+var server = require('http').createServer(app);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var presentations = require('./routes/presentations');
 
-var app = express();
-var server = app.listen(3000);
 var io = require('socket.io').listen(server);
 
-io.on('connection', function(socket) {
-    console.log('A new user connected!');
-    socket.on('live update', function(msg){
-      io.emit('live update', msg);
-    });
-});
+
 
 MongoClient.connect(url, function(err, db){
   assert.equal(null, err);
@@ -82,7 +77,17 @@ app.use(function(err, req, res, next) {
   });
 });
 
-console.log("Express server listening on port 3000");
+server.listen(port);
+
+io.on('connection', function(socket) {
+    console.log('A new user connected!');
+    socket.on('live update', function(msg){
+      io.emit('live update', msg);
+    });
+});
+
+
+console.log("Express server listening on port 5000");
 
 
 module.exports = app;
